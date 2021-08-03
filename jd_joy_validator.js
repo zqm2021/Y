@@ -2,7 +2,7 @@
 58 23,7,15 * * * 宠汪汪验证
  */
 const $ = new Env('宠汪汪验证');
-const validator = require('./utils/JDJRValidator_Pure.js');
+const validator = require('./JDJRValidator_Pure.js');
 // const validator = require('./JDJRValidator.js');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
