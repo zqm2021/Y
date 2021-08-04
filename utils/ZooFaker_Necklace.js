@@ -292,7 +292,7 @@ var K256 = new Array(
 var ihash, count, buffer;
 var sha256_hex_digits = "0123456789abcdef";
 
-/* Add 32-bit integers with 16-bit operations (bug in some JS-interpreters: 
+/* Add 32-bit integers with 16-bit operations (bug in some JS-interpreters:
 overflow) */
 function safe_add(x, y) {
     var lsw = (x & 0xffff) + (y & 0xffff);
@@ -848,7 +848,7 @@ let utils = {
         outstr.push("C");
         var data = {
             tm: [],
-            tnm: [],
+            tnm: ["d5-15,C5,5JD,a,t","d7-15,C5,5LJ,a,t"],
             grn: 1,
             ss: TouchSession,
             wed: 'ttttt',
