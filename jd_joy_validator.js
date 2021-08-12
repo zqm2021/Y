@@ -1,5 +1,5 @@
 /*
-58 23,7,15 * * * 宠汪汪验证
+cron 1 58 23,7,15 * * * 宠汪汪验证
  */
 const $ = new Env('宠汪汪验证');
 const validator = require('./JDJRValidator_Pure.js');
