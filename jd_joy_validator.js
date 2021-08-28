@@ -55,7 +55,7 @@ async function joyValidator() {
 function getPetTaskConfig() {
   return new Promise(async resolve => {
     $.get({
-      url: "https://jdjoy.jd.com//common/pet/getPetTaskConfig?reqSource=h5&invokeKey=ztmFUCxcPMNyUq0P",
+      url: "https://jdjoy.jd.com//common/pet/getPetTaskConfig?reqSource=h5&invokeKey=RtKLB8euDo7KwsO0",
       headers: {
         'Host': 'jdjoy.jd.com',
         'accept': '*/*',
