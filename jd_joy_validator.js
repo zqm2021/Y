@@ -26,6 +26,7 @@ if(process.env.JOY_HOST){
 
 $.get=validator.injectToRequest($.get.bind($))
 $.post=validator.injectToRequest($.post.bind($))
+
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg('【京东账号一】宠汪汪积分兑换奖品失败', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -37,10 +38,9 @@ $.post=validator.injectToRequest($.post.bind($))
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       $.index = i + 1;
       $.nickName = '' || $.UserName;
-      // await TotalBean();
       console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}****\n`);
-      lkt = new Date().getTime()
-      getUA()
+      lkt = new Date().getTime();
+      getUA();
       await joyValidator();
     }
   }
@@ -71,7 +71,7 @@ function getPetTaskConfig() {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
         } else {
-          console.log('----', JSON.parse(data))
+          // console.log('----', JSON.parse(data))
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -80,38 +80,6 @@ function getPetTaskConfig() {
       }
     })
   })
-
-  // return new Promise(resolve => {
-  //   let lkt = new Date().getTime()
-  //   let lks = $.md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
-  //   $.get({
-  //     url: "https://jdjoy.jd.com/common/pet/getPetTaskConfig?reqSource=h5&invokeKey=RtKLB8euDo7KwsO0",
-  //     headers: {
-  //       "Host": "jdjoy.jd.com",
-  //       "Accept": "*/*",
-  //       "Accept-Encoding": "gzip, deflate, br",
-  //       "Accept-Language": "zh-cn",
-  //       "Content-Type": "application/json",
-  //       "Origin": "https://jdjoy.jd.com",
-  //       "reqSource": "h5",
-  //       "Connection": "keep-alive",
-  //       "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-  //       "Referer": "https://jdjoy.jd.com/pet/index",
-  //       "Content-Length": "10",
-  //       "Cookie": cookie,
-  //       'lkt': lkt,
-  //       'lks': lks
-  //     },
-  //   }, (err, resp, data) => {
-  //     try {
-  //
-  //     } catch (e) {
-  //       $.logErr(e);
-  //     } finally {
-  //       resolve();
-  //     }
-  //   })
-  // })
 }
 
 function taskUrl(url, Host, reqSource) {
