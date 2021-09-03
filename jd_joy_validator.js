@@ -53,7 +53,7 @@ async function joyValidator() {
 }
 
 function getPetTaskConfig() {
-  return new Promise(async resolve => {
+  return new Promise(resolve => {
     let lkt = new Date().getTime()
     let lks = $.md5('' + 'RtKLB8euDo7KwsO0' + lkt).toString()
     $.get({
