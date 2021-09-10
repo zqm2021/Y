@@ -120,10 +120,10 @@ async function showMsg() {
   ReturnMessage+=`昨日收入：${$.incomeBean}京豆 🐶\n`;
   ReturnMessage+=`昨日支出：${$.expenseBean}京豆 🐶\n`;
   ReturnMessage+=`当前京豆：${$.beanCount}(七天将过期${$.expirejingdou})京豆🐶\n`;
-
+  
   if(typeof $.JDEggcnt !== "undefined"){
 	ReturnMessage+=`京喜牧场：${$.JDEggcnt}枚鸡蛋\n`;
-  }
+  } 
   if(typeof $.JDtotalcash !== "undefined"){
 	ReturnMessage+=`极速金币：${$.JDtotalcash}金币(≈${$.JDtotalcash / 10000}元)\n`;
   }
@@ -132,7 +132,7 @@ async function showMsg() {
   }
   if($.JdMsScore!=0){
 	ReturnMessage+=`京东秒杀：${$.JdMsScore}秒秒币(≈${$.JdMsScore / 1000}元)\n`;
-  }
+  } 
   if($.JdFarmProdName != ""){
 	if($.JdtreeEnergy!=0){
 		ReturnMessage+=`东东农场：${$.JdFarmProdName},进度${(($.JdtreeEnergy / $.JdtreeTotalEnergy) * 100).toFixed(2)}%`;
@@ -145,7 +145,7 @@ async function showMsg() {
 		ReturnMessage+=`东东农场：${$.JdFarmProdName}\n`;
 	}
   }
-
+  
   const response = await await PetRequest('energyCollect');
   const initPetTownRes = await PetRequest('initPetTown');
   if (initPetTownRes.code === '0' && initPetTownRes.resultCode === '0' && initPetTownRes.message === 'success') {
@@ -231,38 +231,37 @@ async function bean() {
 function TotalBean() {
   return new Promise(async resolve => {
     const options = {
-      "url": `https://wq.jd.com/user/info/QueryJDUserInfo?sceneval=2`,
-      "headers": {
-        "Accept": "application/json,text/plain, */*",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Accept-Encoding": "gzip, deflate, br",
+      url: "https://wq.jd.com/user_new/info/GetJDUserInfoUnion?sceneval=2",
+      headers: {
+        Host: "wq.jd.com",
+        Accept: "*/*",
+        Connection: "keep-alive",
+        Cookie: cookie,
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
         "Accept-Language": "zh-cn",
-        "Connection": "keep-alive",
-        "Cookie": cookie,
-        "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
+        "Referer": "https://home.m.jd.com/myJd/newhome.action?sceneval=2&ufc=&",
+        "Accept-Encoding": "gzip, deflate, br"
       }
     }
-    $.post(options, (err, resp, data) => {
+    $.get(options, (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
+          $.logErr(err)
         } else {
           if (data) {
             data = JSON.parse(data);
-            if (data['retcode'] === 13) {
+            if (data['retcode'] === 1001) {
               $.isLogin = false; //cookie过期
-              return
+              return;
             }
-            if (data['retcode'] === 0 && data.base && data.base.nickname) {
-              $.nickName = data.base.nickname;
+            if (data['retcode'] === 0 && data.data && data.data.hasOwnProperty("userInfo")) {
+              $.nickName = data.data.userInfo.baseInfo.nickname;
             }
-            if (data['retcode'] === 0 && data.base && data.base.jdNum) {
-              $.beanCount = data.base.jdNum
+            if (data['retcode'] === 0 && data.data && data.data['assetInfo']) {
+              $.beanCount = data.data && data.data['assetInfo']['beanNum'];
             }
           } else {
-            console.log(`京东服务器返回空数据`)
+            console.log('京东服务器返回空数据');
           }
         }
       } catch (e) {
@@ -434,7 +433,7 @@ function getJdZZ() {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (safeGet(data)) {
-            data = JSON.parse(data);
+            data = JSON.parse(data);		
             $.JdzzNum = data.data.totalNum
           }
         }
@@ -474,7 +473,7 @@ function getMs() {
           if (safeGet(data)) {
             data = JSON.parse(data)
             if (data.code === 2041) {
-              $.JdMsScore = data.result.assignment.assignmentPoints || 0
+              $.JdMsScore = data.result.assignment.assignmentPoints || 0              
             }
           }
         }
@@ -540,12 +539,12 @@ async function getjdfruit() {
 			if ($.farmInfo.farmUserPro) {
 				$.JdFarmProdName=$.farmInfo.farmUserPro.name;
 				$.JdtreeEnergy=$.farmInfo.farmUserPro.treeEnergy;
-				$.JdtreeTotalEnergy=$.farmInfo.farmUserPro.treeTotalEnergy;
-
+				$.JdtreeTotalEnergy=$.farmInfo.farmUserPro.treeTotalEnergy;			
+				 
 				let waterEveryDayT = $.JDwaterEveryDayT;
 				let waterTotalT = ($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy - $.farmInfo.farmUserPro.totalEnergy) / 10;//一共还需浇多少次水
 				let waterD = Math.ceil(waterTotalT / waterEveryDayT);
-
+				
 				$.JdwaterTotalT = waterTotalT;
 				$.JdwaterD = waterD;
 			}
@@ -588,7 +587,7 @@ function jdfruitRequest(function_id, body = {}, timeout = 1000){
 
 
 async function PetRequest(function_id, body = {}) {
-  await $.wait(3000);
+  await $.wait(3000); 
   return new Promise((resolve, reject) => {
     $.post(taskPetUrl(function_id, body), (err, resp, data) => {
       try {
@@ -673,12 +672,12 @@ var __encode ='jsjiami.com',_a={}, _0xb483=["\x5F\x64\x65\x63\x6F\x64\x65","\x68
 
 async function JxmcGetRequest() {
   let url = ``;
-  let myRequest = ``;
+  let myRequest = ``;  
   url = `https://m.jingxi.com/jxmc/queryservice/GetHomePageInfo?channel=7&sceneid=1001&activeid=null&activekey=null&isgift=1&isquerypicksite=1&_stk=channel%2Csceneid&_ste=1`;
   url += `&h5st=${decrypt(Date.now(), '', '', url)}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&callback=jsonpCBK${String.fromCharCode(Math.floor(Math.random() * 26) + "A".charCodeAt(0))}&g_ty=ls`;
   myRequest = getGetRequest(`GetHomePageInfo`, url);
-
-
+      
+    
   return new Promise(async resolve => {
     $.get(myRequest, (err, resp, data) => {
       try {
@@ -690,7 +689,7 @@ async function JxmcGetRequest() {
         } else {
           data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
 		  if (data.ret === 0) {
-			$.JDEggcnt=data.data.eggcnt;
+			$.JDEggcnt=data.data.eggcnt;	
 		  }
         }
       } catch (e) {
@@ -713,7 +712,7 @@ function randomString(e) {
 
 function getGetRequest(type, url) {
   UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString(40)};network/wifi;model/iPhone10,2;appBuild/100609;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
-
+    
   const method = `GET`;
   let headers = {
     'Origin': `https://st.jingxi.com`,
@@ -780,8 +779,8 @@ function decrypt(time, stk, type, url) {
 }
 
 async function requestAlgo() {
-  $.fingerprint = await generateFp();
-  $.appId = 10028;
+  $.fingerprint = await generateFp(); 
+  $.appId = 10028;  
   const options = {
     "url": `https://cactus.jd.com/request_algo?g_ty=ajax`,
     "headers": {
@@ -807,7 +806,7 @@ async function requestAlgo() {
       "platform": "web",
       "expandParams": ""
     })
-  }
+  }  
   new Promise(async resolve => {
     $.post(options, (err, resp, data) => {
       try {
