@@ -18,7 +18,7 @@ if ($.isNode()) {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 let JD_API_HOST = 'https://jdjoy.jd.com'
-$.invokeKey = 'RtKLB8euDo7KwsO0'
+$.invokeKey = 'JL1VTNRadM68cIMQ'
 let lkt = 0
 if(process.env.JOY_HOST){
   JD_API_HOST = process.env.JOY_HOST
