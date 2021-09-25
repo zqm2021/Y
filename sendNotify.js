@@ -200,9 +200,9 @@ async function sendNotify(text, desp, params = {}, author = '\n\n' + end_txt) {
     for (let account of remarks) {
       if (account['pt_pin'] && account['qqnumber'] && account['remarks'] ){
         text = text.replace(new RegExp(account['pt_pin'], 'gm'), account['remarks'])
-        desp = desp.replace(new RegExp(account['pt_pin'], 'gm'), account['remarks'])
+        desp = desp.replace(new RegExp(account['pt_pin'], 'gm'), account['remarks'])    
       }
-
+      
     }
   }
   if (tg_only) {
@@ -295,11 +295,11 @@ function goCQhttp(text, desp) {
     }
     if (remarks) {
       for (let account of remarks) {
-        if (desp.indexOf(account['remarks']) !=-1) {qqnumber = account['qqnumber']}
+        if (desp.indexOf(account['remarks']) !=-1) {qqnumber = account['qqnumber']}      
       }
     }
     let expire = RegExp ("重新登录");
-    let individual = RegExp ("已可领取|已可兑换|已成熟|未选择|兑换成功|提现成功|忘了|京东资产变动|东东农场|未继续|已领取");
+    let individual = RegExp ("已可领取|已可兑换|已成熟|未选择|兑换成功|提现成功|忘了|京东资产变动|东东农场|未继续|已领取"); 
     if((expire.test(text) === true || expire.test(desp) === true) && qqnumber) {
       let msgs = (msg + '\n\n' + GO_CQHTTP_LINK)
       return new Promise(resolve => {
@@ -312,7 +312,7 @@ function goCQhttp(text, desp) {
             } else {
               // console.log(data);
               data = JSON.parse(data);
-              if (data.retcode === 0 && data.status === 'ok') {
+              if (data.retcode === 0 && data.status === 'ok') {              
                 console.log(`go-cqhttp发送给个人通知消息成功🎉\n`)
               } else if(data.retcode !== 0 && data.status !== 'ok' ) {
                 console.log(`go-cqhttp发送给个人通知消息异常\n${JSON.stringify(data)}`)
@@ -337,7 +337,7 @@ function goCQhttp(text, desp) {
             } else {
               // console.log(data);
               data = JSON.parse(data);
-              if(data.retcode === 0 && data.status === 'ok') {
+              if(data.retcode === 0 && data.status === 'ok') {              
                 console.log(`go-cqhttp发送给个人通知消息成功🎉\n`)
               } else if(data.retcode !== 0 && data.status !== 'ok' ) {
                 console.log(`go-cqhttp发送给个人通知消息异常\n${JSON.stringify(data)}`)
@@ -362,7 +362,7 @@ function goCQhttp(text, desp) {
             } else {
               // console.log(data);
               data = JSON.parse(data);
-              if(data.retcode === 0 && data.status === 'ok') {
+              if(data.retcode === 0 && data.status === 'ok') {              
                 console.log('go-cqhttp发送通知消息成功🎉\n')
               } else if(data.retcode !== 0 && data.status !== 'ok' ) {
                 console.log(`go-cqhttp发送通知消息异常\n${JSON.stringify(data)}`)
@@ -460,7 +460,7 @@ function BarkNotify(text, desp, params = {}) {
   return new Promise(resolve => {
     if (BARK_PUSH) {
       const options = {
-        url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(desp)}?sound=${BARK_SOUND}&${querystring.stringify(params)}`,
+        url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(desp)}?sound=${BARK_SOUND}&group=${BARK_GROUP}&${querystring.stringify(params)}`,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
