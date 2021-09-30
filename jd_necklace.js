@@ -50,7 +50,6 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       await getToken();
       cookie = cookiesArr[i] + `joyytoken=50082${joyToken};`;
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-      cookie += `pwdt_id=${$.UserName};`
       $.index = i + 1;
       $.isLogin = true;
       $.nickName = '';
