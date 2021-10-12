@@ -8,7 +8,7 @@
 
 [task_local]
 #柠檬赚金币
-0 7 * * * http://nm66.top/jd_zjb.js, tag=柠檬赚金币, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+47 7 * * * http://nm66.top/jd_zjb.js, tag=柠檬赚金币, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 */
 const $ = new Env('柠檬赚金币');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -66,7 +66,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         await help2("zero205","%2FeNHdfn6fP%2BTFwVda3ipjWwvTFqeKBZaRG38adWABKk%3D")
         await help2("zero205","R%20eeS9UrTadw7yIF7ubkxBOARQK0BNXiQLVF0TyAf4Q%3D")
         await help2("whisper liu","Sev6JWjut6GyaEHJIWpSQQ%3D%3D")
-        
+
       }
     }
   }

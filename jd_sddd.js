@@ -6,14 +6,14 @@
 ============Quantumultx===============
 [task_local]
 #送豆得豆
-45 1,12 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_sendBeans.js, tag=送豆得豆, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+49 1,12 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_sendBeans.js, tag=送豆得豆, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 ================Loon==============
 [Script]
-cron "45 1,12 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_sendBeans.js,tag=送豆得豆
+cron "49 1,12 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_sendBeans.js,tag=送豆得豆
 ===============Surge=================
-送豆得豆 = type=cron,cronexp="45 1,12 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_sendBeans.js
+送豆得豆 = type=cron,cronexp="49 1,12 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_sendBeans.js
 ============小火箭=========
-送豆得豆 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_sendBeans.js, cronexpr="45 1,12 * * *", timeout=3600, enable=true
+送豆得豆 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_sendBeans.js, cronexpr="49 1,12 * * *", timeout=3600, enable=true
  */
 const $ = new Env('送豆得豆');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -42,7 +42,7 @@ if ($.isNode()) {
     $.isLogin = true;
     $.nickName = ''
     if (isLoginInfo[$.UserName] === false) {
-      
+
     } else {
       if (!isLoginInfo[$.UserName]) {
         await TotalBean();
@@ -68,7 +68,7 @@ if ($.isNode()) {
     $.nickName = '';
     console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
     if (isLoginInfo[$.UserName] === false) {
-      
+
     } else {
       if (!isLoginInfo[$.UserName]) {
         await TotalBean();
@@ -97,7 +97,7 @@ if ($.isNode()) {
     }
     if (!isLoginInfo[$.UserName]) {
       $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
-      
+
       if ($.isNode()) {
         await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
       }
@@ -142,7 +142,7 @@ if ($.isNode()) {
     $.isLogin = true;
     console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
     if (isLoginInfo[$.UserName] === false) {
-      
+
     } else {
       if (!isLoginInfo[$.UserName]) {
         await TotalBean();
@@ -160,7 +160,7 @@ if ($.isNode()) {
     $.nickName = ''
     console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
     if (isLoginInfo[$.UserName] === false) {
-      
+
     } else {
       if (!isLoginInfo[$.UserName]) {
         await TotalBean();

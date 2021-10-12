@@ -1,5 +1,5 @@
 /*
-cron "30 21 * * *" jd_bean_change.js, tag:资产变化强化版by-ccwav
+cron "20 10,22 * * *" jd_bean_change.js, tag:资产变化强化版by-ccwav
  */
 
 
@@ -500,7 +500,7 @@ async function showMsg() {
 	if ($.joylevel || $.jdCash) {
 		ReturnMessage += `【其他信息】`;
 		if ($.joylevel) {
-			ReturnMessage += `汪汪:${$.joylevel}级`;			
+			ReturnMessage += `汪汪:${$.joylevel}级`;
 			if ($.jdCash) {
 				ReturnMessage += ",";
 			}
@@ -541,7 +541,7 @@ async function showMsg() {
 		} else {
 			if ($.treeState === 0) {
 				TempBaipiao+= `【东东农场】水果领取后未重新种植!\n`;
-				
+
 				if (userIndex2 != -1) {
 					WarnMessageGp2 += `【账号${IndexGp2} ${$.nickName || $.UserName}】水果领取后未重新种植! (东东农场)\n`;
 				}
@@ -554,7 +554,7 @@ async function showMsg() {
 				if (userIndex2 == -1 && userIndex3 == -1 && userIndex4 == -1) {
 					allWarnMessage += `【账号${IndexAll} ${$.nickName || $.UserName}】水果领取后未重新种植! (东东农场)\n`;
 				}
-				
+
 			} else if ($.treeState === 1) {
 				ReturnMessage += `【东东农场】${$.JdFarmProdName}种植中...\n`;
 			} else {
@@ -609,7 +609,7 @@ async function showMsg() {
 		if (userIndex2 == -1 && userIndex3 == -1 && userIndex4 == -1) {
 			allReceiveMessage += `【账号${IndexAll} ${$.nickName || $.UserName}】${$.jxFactoryReceive} (京喜工厂)\n`;
 		}
-		
+
 		TempBaipiao+=`【京喜工厂】${$.jxFactoryReceive} 可以兑换了!\n`;
 
 	}
@@ -671,8 +671,8 @@ async function showMsg() {
 	}
 
 	ReturnMessage += `🧧🧧🧧红包明细🧧🧧🧧\n`;
-	ReturnMessage += `${$.message}`;	
-	
+	ReturnMessage += `${$.message}`;
+
 	if (userIndex2 != -1) {
 		allMessageGp2 += ReturnMessage + `\n`;
 	}
@@ -687,17 +687,17 @@ async function showMsg() {
 	}
 
 	console.log(`${ReturnMessage}`);
-	
+
 	if ($.isNode() && WP_APP_TOKEN_ONE) {
 		if(TempBaipiao){
 			TempBaipiao=`\n\n【⏰商品白嫖活动提醒⏰】\n` +TempBaipiao;
 			TempBaipiao += RemainMessage;
 			ReturnMessage+=TempBaipiao;
 		}
-			
+
 		await notify.sendNotifybyWxPucher(`${$.name}`, `${ReturnMessage}`,`${$.UserName}`);
 	}
-	
+
 	//$.msg($.name, '', ReturnMessage , {"open-url": "https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean"});
 }
 async function bean() {

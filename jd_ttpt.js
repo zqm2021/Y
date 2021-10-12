@@ -12,17 +12,17 @@ GitHub：https://github.com/zero205/JD_tencent_scf/tree/main
 ============Quantumultx===============
 [task_local]
 京东金融天天拼图
-20 0,16 * * * https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_ttpt.js, tag=京东金融天天拼图, enabled=true
+26 0,16 * * * https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_ttpt.js, tag=京东金融天天拼图, enabled=true
 
 ================Loon==============
 [Script]
-cron "20 0,16 * * *" script-path=https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_ttpt.js,tag=京东金融天天拼图
+cron "26 0,16 * * *" script-path=https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_ttpt.js,tag=京东金融天天拼图
 
 ===============Surge=================
-京东金融天天拼图 = type=cron,cronexp="20 0,16 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_ttpt.js
+京东金融天天拼图 = type=cron,cronexp="26 0,16 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_ttpt.js
 
 ============小火箭============
-京东金融天天拼图 = type=cron,script-path=https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_ttpt.js, cronexpr="20 0,16 * * *", timeout=3600, enable=true
+京东金融天天拼图 = type=cron,script-path=https://raw.githubusercontent.com/zero205/JD_tencent_scf/main/jd_ttpt.js, cronexpr="26 0,16 * * *", timeout=3600, enable=true
 *
 */
 const $ = new Env('天天拼图');
