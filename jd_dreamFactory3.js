@@ -645,7 +645,7 @@ function userInfo() {
                 await $.get({
                   url: 'http://51.15.187.136:8080/activeJdFactoryCode?code=' + data.user.encryptPin
                 }, function (err, resp, data) {
-                  console.log('互助码状态:' + resp.body);
+                  console.log(`互助码状态：${resp.body}\n`);
                 })
                 console.log(`已投入电力：${production.investedElectric}`);
                 console.log(`所需电力：${production.needElectric}`);
