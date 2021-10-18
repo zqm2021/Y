@@ -9,7 +9,7 @@ inputs:
   name: scf-${name} # 云函数名称，默认为 ${name}-${stage}-${app}
   namespace: default
   enableRoleAuth: true # 默认会尝试创建 SCF_QcsRole 角色，如果不需要配置成 false 即可
-  src: 
+  src:
     src: ./
     exclude:
       - '*.!(js|txt|json)'
@@ -46,7 +46,13 @@ inputs:
         parameters:
           name: blueCoin
           cronExpression: "0 59 23 * * * *"
-          enable: true
+          enable: false
           argument: jd_blueCoin
+    - timer:
+        parameters:
+          name: cfd
+          cronExpression: "59 0 0 * * * *"
+          enable: true
+          argument: jd_cfd
   environment: #  环境变量
     variables: #  环境变量对象
