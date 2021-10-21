@@ -8,17 +8,17 @@
 ============Quantumultx===============
 [task_local]
 #京东汽车
-17 7 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js, tag=京东汽车, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png, enabled=true
+10 7 * * * https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js, tag=京东汽车, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "17 7 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js, tag=京东汽车
+cron "10 7 * * *" script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js, tag=京东汽车
 
 ===============Surge=================
-京东汽车 = type=cron,cronexp="17 7 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js
+京东汽车 = type=cron,cronexp="10 7 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js
 
 ============小火箭=========
-京东汽车 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js, cronexpr="17 7 * * *", timeout=200, enable=true
+京东汽车 = type=cron,script-path=https://raw.githubusercontent.com/LXK9301/jd_scripts/master/jd_car.js, cronexpr="10 7 * * *", timeout=200, enable=true
  */
 const $ = new Env('京东汽车');
 
