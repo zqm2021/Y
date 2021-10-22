@@ -172,6 +172,24 @@ async function doTask(){
                 await $.wait(1000);
             }
         }
+        if($.oneTask.type === 5){
+            let subList = $.oneTask.info;
+            for (let j = 0; j < subList.length; j++) {
+                $.subListInfo = subList[j];
+                console.log(`任务：${subList[j].title},去执行`);
+                await takePostRequest('view_shop');
+                await $.wait(1000);
+            }
+        }
+        if($.oneTask.type === 6){
+            let subList = $.oneTask.info;
+            for (let j = 0; j < subList.length; j++) {
+                $.subListInfo = subList[j];
+                console.log(`任务：${subList[j].title},去执行`);
+                await takePostRequest('view_product');
+                await $.wait(1000);
+            }
+        }
     }
 }
 
@@ -200,6 +218,8 @@ async function takePostRequest(type) {
         case 'view_meeting':
         case 'shop_follow':
         case 'add_product':
+        case 'view_shop':
+        case 'view_product':
             body = `{"id":${$.subListInfo.id}}`;
             break;
         case 'invite_friend':
@@ -278,7 +298,7 @@ async function takeGetRequest(type) {
             'Connection' : `keep-alive`,
             'Accept' : `application/json, text/plain, */*`,
             'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-            'Authorization':`Bearer ${$.accessToken ?? 'undefined'}`,
+            'Authorization':`Bearer ${$.accessToken || 'undefined'}`,
             'Referer' : `https://xinruimz1-isv.isvjcloud.com/loading/`,
             'Accept-Language':'zh-cn'
         },
@@ -327,6 +347,8 @@ function dealReturn(type, data) {
         case 'view_meeting':
         case 'shop_follow':
         case 'add_product':
+        case 'view_shop':
+        case 'view_product':
             console.log(`执行成功，获得抽奖次数：${data.add_coins || 0}，共有抽奖次数：${data.coins || 0}`);
             $.drawTime = data.coins || 0;
             break;
