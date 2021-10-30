@@ -84,7 +84,7 @@ if ($.isNode()) {
             fcwbinviterArr.push(fcwbinviters[item])
         }
     })
-    console.log(`共${fcwbinviteCodeArr.length}个邀请码`)    
+    console.log(`共${fcwbinviteCodeArr.length}个邀请码`)
     for (let i = 0; i < cookiesArr.length; i++) {
         if (!cookiesArr[i]) {
             continue
@@ -106,22 +106,22 @@ if ($.isNode()) {
             continue
         }
         await home()
-        await $.wait(1000)
-        await BROWSE_CHANNEL(1)
-        await $.wait(3000)
-        await BROWSE_CHANNEL(2)
-        await $.wait(3000)
-        await BROWSE_CHANNEL(3)
-        await $.wait(3000)
-        await BROWSE_CHANNEL(4)
-        await $.wait(3000)
+//         await $.wait(1000)
+//         await BROWSE_CHANNEL(1)
+//         await $.wait(3000)
+//         await BROWSE_CHANNEL(2)
+//         await $.wait(3000)
+//         await BROWSE_CHANNEL(3)
+//         await $.wait(3000)
+//         await BROWSE_CHANNEL(4)
+//         await $.wait(3000)
 
-        for (let i = 0; i < 5; i++) {
-            console.log(`挖宝${i}次`)
-            await $.wait(3000)
-            await wb(curRound, i, i)
-            console.log('第' + curRound + '关')
-        }
+//         for (let i = 0; i < 5; i++) {
+//             console.log(`挖宝${i}次`)
+//             await $.wait(3000)
+//             await wb(curRound, i, i)
+//             console.log('第' + curRound + '关')
+//         }
     }
     console.log(`内部互助优先,作者在最后`)
     // const url = `https://raw.fastgit.org/${Math.random() > 0.5 ? 'zero205':'shufflewzc'}/updateTeam/main/shareCodes/fcwb.json`
@@ -220,7 +220,7 @@ function wb(round, rowIdx, colIdx) {
                         data = JSON.parse(data);
                         if (data.success == true) {
                             console.log(`挖到${data.data.chunk.value}`)
-                            // console.log(`export fcwbinviter='${data.data.markedPin}'`)  
+                            // console.log(`export fcwbinviter='${data.data.markedPin}'`)
                         } else if (data.success == false) {
                             console.log(data.errMsg)
                         }
@@ -239,7 +239,7 @@ function home() {
     return new Promise((resolve) => {
         let body = { "linkId": "SS55rTBOHtnLCm3n9UMk7Q" }
         $.get(taskurl('happyDigHome', body), async (err, resp, data) => {
-            //console.log(data)  
+            //console.log(data)
             try {
                 if (err) {
                     console.log(`${JSON.stringify(err)}`)
