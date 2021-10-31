@@ -74,12 +74,20 @@ const JD_API_HOST = `https://api.m.jd.com/client.action`;
         continue
       }
       if ($.shareCoseList.length >=2) {
-          for (let y = 0; y < $.shareCoseList.length; y++){ 
+          for (let y = 0; y < $.shareCoseList.length; y++){
             console.log(`京东账号${$.index} ${$.nickName || $.UserName}去助力${$.shareCoseList[y]}`)
             await helpShare({"taskId":$.helpId,"linkId":"DQFdr1ttvWWzn0wsQ7JDZQ","encryptPin":$.shareCoseList[y]});
             await $.wait(1000);
                 }
       }
+
+            //如果有多余机会给我助力
+            let authorCode = 'SeT5cz7JQIJNnv7xJ2IQKQ';
+            for (let y = 0; y < $.shareCoseList.length; y++){
+                console.log(`京东账号${$.index} ${$.UserName || $.UserName}去助力${authorCode}`)
+                await helpShare({"taskId":$.helpId,"linkId":"DQFdr1ttvWWzn0wsQ7JDZQ","encryptPin":$.authorCode});
+                await $.wait(1000);
+            }
 
       //开箱
       console.log(`京东账号${$.index}去开箱`)
@@ -115,7 +123,7 @@ async function main() {
                     console.log(`去浏览${$.itemName}`)
                     await apDoTask({"taskId":$.allList[i].id,"taskType":$.allList[i].taskType,"channel":4,"itemId":$.startList.itemId,"linkId":"DQFdr1ttvWWzn0wsQ7JDZQ","encryptPin":"7pcfSWHrAG9MKu3RKLl127VL5L4aIE1sZ1eRRdphpl8"})
                     await $.wait(1000)
-                    } 
+                    }
                 }
             }
         }else{
@@ -148,7 +156,7 @@ function superboxSupBoxHomePage(body) {
       }
     })
   })
-}    
+}
 
 
 //获取任务列表
