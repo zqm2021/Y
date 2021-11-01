@@ -20,6 +20,15 @@ let GOBOT_URL = ''; // 推送到个人QQ: http://127.0.0.1/send_private_msg  群
 let GOBOT_TOKEN = ''; //访问密钥
 let GOBOT_QQ = ''; // 如果GOBOT_URL设置 /send_private_msg 则需要填入 user_id=个人QQ 相反如果是 /send_group_msg 则需要填入 group_id=QQ群
 
+// =======================================原生go-cqhttp通知设置区域===========================================
+//cqhttp_url 填写请求地址http://127.0.0.1/send_private_msg
+//cqhttp_token 填写在go-cqhttp文件设置的访问密钥
+//cqhttp_qq 填写推送到个人QQ或者QQ群号
+//go-cqhttp相关API https://docs.go-cqhttp.org/api
+let CQHTTP_URL = ''; // 推送到个人QQ: http://127.0.0.1/send_private_msg  群：http://127.0.0.1/send_group_msg
+let CQHTTP_TOKEN = ''; //访问密钥
+let CQHTTP_QQ = ''; // 如果GOBOT_URL设置 /send_private_msg 则需要填入 user_id=个人QQ 相反如果是 /send_group_msg 则需要填入 group_id=QQ群
+
 // =======================================微信server酱通知设置区域===========================================
 //此处填你申请的SCKEY.
 //(环境变量名 PUSH_KEY)
@@ -90,6 +99,16 @@ if (process.env.GOBOT_TOKEN) {
 }
 if (process.env.GOBOT_QQ) {
   GOBOT_QQ = process.env.GOBOT_QQ;
+}
+
+if (process.env.CQHTTP_URL) {
+  CQHTTP_URL = process.env.CQHTTP_URL;
+}
+if (process.env.CQHTTP_TOKEN) {
+  CQHTTP_TOKEN = process.env.CQHTTP_TOKEN;
+}
+if (process.env.CQHTTP_QQ) {
+  CQHTTP_QQ = process.env.CQHTTP_QQ;
 }
 
 if (process.env.PUSH_KEY) {
@@ -169,9 +188,9 @@ if (process.env.PUSH_PLUS_USER) {
  * @param author 作者仓库等信息  例：`本脚本免费使用 By：xxxx`
  * @returns {Promise<unknown>}
  */
-async function sendNotify(text, desp, params = {}, author = '') {
+async function sendNotify(text, desp, params = {TG交流群:'https://t.me/jd_zero_205'}, author = 'zero205') {
   //提供6种通知
-  desp += '\n\n仅供用于学习';//增加作者信息，防止被贩卖等
+  desp += '\n\n助力池提交方法请加入TG群组：\nhttps://t.me/jd_zero_205';//增加作者信息，防止被贩卖等
   await Promise.all([
     serverNotify(text, desp), //微信server酱
     pushPlusNotify(text, desp) //pushplus(推送加)
@@ -186,23 +205,69 @@ async function sendNotify(text, desp, params = {}, author = '') {
     qywxamNotify(text, desp), //企业微信应用消息推送
     iGotNotify(text, desp, params), //iGot
     gobotNotify(text, desp),//go-cqhttp
+    cqhttpbotNotify(text, desp),//go-cqhttp
   ]);
+}
+
+function cqhttpbotNotify(text, desp, time = 2100) {
+  return new Promise((resolve) => {
+    if (CQHTTP_URL) {
+      const options = {
+        url: `${CQHTTP_URL}`,
+	json: {
+		message: `${text}\n${desp}`,
+		user_id: `${CQHTTP_QQ}`
+	},
+	headers: {
+		'Content-Type': 'application/json',
+		'Authorization': `Bearer ${CQHTTP_TOKEN}`,
+	},
+	timeout,
+      };
+      setTimeout(() => {
+        $.post(options, (err, resp, data) => {
+          try {
+            if (err) {
+              console.log('发送go-cqhttp通知调用API失败！！\n');
+              console.log(err);
+            } else {
+              data = JSON.parse(data);
+              if (data.retcode === 0) {
+                console.log('go-cqhttp发送通知消息成功🎉\n');
+              } else if (data.retcode === 100) {
+                console.log(`go-cqhttp发送通知消息异常: ${data.errmsg}\n`);
+              } else {
+                console.log(
+                  `go-cqhttp发送通知消息异常\n${JSON.stringify(data)}`,
+                );
+              }
+            }
+          } catch (e) {
+            $.logErr(e, resp);
+          } finally {
+            resolve(data);
+          }
+        });
+      }, time);
+    } else {
+      console.log('您未提供GOBOT的GOBOT_URL和GOBOT_TOKEN和GOBOT_QQ，取消GOBOT推送消息通知🚫\n');
+      resolve();
+    }
+  });
 }
 
 function gobotNotify(text, desp, time = 2100) {
   return new Promise((resolve) => {
     if (GOBOT_URL) {
       const options = {
-        url: `${GOBOT_URL}`,
-        json: {
-			message: `${text}\n${desp}` ,
-			user_id:`${GOBOT_QQ}`
-		},
-        headers: {
-          'Content-Type': 'application/json',
-		  'Authorization': `Bearer ${GOBOT_TOKEN}`
-        },
-        timeout,
+        url: `${GOBOT_URL}?access_token=${GOBOT_TOKEN}&${GOBOT_QQ}`,
+	json: {
+		message: `${text}\n${desp}`
+	},
+	headers: {
+		'Content-Type': 'application/json',
+	},
+	timeout,
       };
       setTimeout(() => {
         $.post(options, (err, resp, data) => {
