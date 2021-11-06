@@ -5,14 +5,14 @@ boxjs：https://raw.githubusercontent.com/Ariszy/Private-Script/master/Ariszy.bo
 
 [task_local]
 #手机竞猜
-0 0 * * * https://raw.githubusercontent.com/Ariszy/Private-Script/master/JD/zy_sjjc.js, tag= 手机竞猜
+0,20 0 * * * https://raw.githubusercontent.com/Ariszy/Private-Script/master/JD/zy_sjjc.js, tag= 手机竞猜
 ================Loon==============
 [Script]
-cron "0 0 * * *" script-path= https://raw.githubusercontent.com/Ariszy/Private-Script/master/JD/zy_sjjc.js,tag= 手机竞猜
+cron "0,20 0 * * *" script-path= https://raw.githubusercontent.com/Ariszy/Private-Script/master/JD/zy_sjjc.js,tag= 手机竞猜
 ===============Surge=================
-手机竞猜 = type=cron,cronexp="0 0 * * *",wake-system=1,timeout=3600,script-path= https://raw.githubusercontent.com/Ariszy/Private-Script/master/JD/zy_sjjc.js
+手机竞猜 = type=cron,cronexp="0,20 0 * * *",wake-system=1,timeout=3600,script-path= https://raw.githubusercontent.com/Ariszy/Private-Script/master/JD/zy_sjjc.js
 ============小火箭=========
-sjjc = type=cron,script-path= https://raw.githubusercontent.com/Ariszy/Private-Script/master/JD/zy_sjjc.js, cronexpr="0 0 * * *", timeout=3600, enable=true
+sjjc = type=cron,script-path= https://raw.githubusercontent.com/Ariszy/Private-Script/master/JD/zy_sjjc.js, cronexpr="0,20 0 * * *", timeout=3600, enable=true
 */
 const Ariszy = '手机竞猜'
 const $ = Env(Ariszy)
@@ -48,7 +48,7 @@ if ($.isNode()) {
           $.getdata("CookieJD2"),
           ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
-    
+
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -91,7 +91,7 @@ for(let i = 0; i < cookiesArr.length; i++){
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
-    
+
 
 function PostRequest(uri,body) {
   const url = `https://api.m.jd.com/api/${uri}`;
@@ -131,7 +131,7 @@ async function quiz(quizId){
           $.logErr(e, response);
       } finally {
         resolve();
-      } 
+      }
     })
    })
   }
@@ -151,7 +151,7 @@ const body = `appid=apple-jd-aggregate&functionId=brandquiz_prod&body=%7B%22quiz
           $.logErr(e, response);
       } finally {
         resolve();
-      } 
+      }
     })
    })
   }
@@ -176,7 +176,7 @@ await $.wait(8000)
           $.logErr(e, response);
       } finally {
         resolve();
-      } 
+      }
     })
    })
   }
@@ -204,7 +204,7 @@ async function getSupportReward(turn,shareid){
           $.logErr(e, response);
       } finally {
         resolve();
-      } 
+      }
     })
    })
   }
@@ -232,7 +232,7 @@ async function dosupport(shareid){
           $.logErr(e, response);
       } finally {
         resolve();
-      } 
+      }
     })
    })
   }
@@ -246,7 +246,7 @@ async function lottery(quizId){
         if(logs)$.log(data)
         if(result.code == 200){
          console.log("抽奖结果"+result.data.prizeName)
-       
+
         }else{
          console.log(result.msg)
         }
@@ -254,7 +254,7 @@ async function lottery(quizId){
           $.logErr(e, response);
       } finally {
         resolve();
-      } 
+      }
     })
    })
   }
@@ -291,7 +291,7 @@ await quiz(quizId)
           $.logErr(e, response);
       } finally {
         resolve();
-      } 
+      }
     })
    })
   }
@@ -299,7 +299,7 @@ await quiz(quizId)
 async function readShareCodes(){
   return new Promise((resolve) => {
     let url = {
-   		url: `https://raw.githubusercontent.com/Ariszy/TGBOT/main/sjjc.js`,       
+   		url: `https://raw.githubusercontent.com/Ariszy/TGBOT/main/sjjc.js`,
    	}
    $.get(url,async(error, response, data) =>{
     try{
@@ -325,10 +325,10 @@ async function readShareCodes(){
           $.logErr(e, response);
       } finally {
         resolve();
-      } 
+      }
     })
    })
-  } 
+  }
 
 async function formatcode(){
 await readShareCodes();
