@@ -468,6 +468,8 @@ async function helpFriends() {
     for (let code of $.newShareCode) {
       if (code) {
         if ($.encryptPin === code) {
+          console.log('$.encryptPin', $.encryptPin)
+          console.log('code', code)
           console.log(`不能为自己助力,跳过`);
           continue;
         }
