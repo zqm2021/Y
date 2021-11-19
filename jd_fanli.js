@@ -1,5 +1,5 @@
 
-/* 
+/*
 京东饭粒
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -78,7 +78,7 @@ if ($.isNode()) {
                             if($.taskList[i].taskId!==null){
                                 await saveTaskRecord(cookie,$.taskList[i].taskId,$.taskList[i].businessId,$.taskList[i].taskType)
                                 if($.sendBody){
-                                    await $.wait(10000)
+                                    await $.wait(Number($.taskList[i].watchTime)*1000 + Math.floor(Math.random()*1000))
                                     await saveTaskRecord1(cookie,$.taskList[i].taskId,$.taskList[i].businessId,$.taskList[i].taskType,$.sendBody.uid,$.sendBody.tt)
                                 }
                                 else{
@@ -88,15 +88,15 @@ if ($.isNode()) {
                            }
                         }
                     }
-                    
+
                 }
                 else{
                     console.log("任务已做完")
                 }
-                
+
             }
         }
-  
+
 })()
     .catch((e) => {
         $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -124,7 +124,7 @@ function saveTaskRecord(ck,taskId,businessId,taskType) {
             "Content-Type": "application/json;charset=UTF-8"
         },
         body : JSON.stringify({ taskId: taskId,businessId:businessId, taskType: taskType }),
-       
+
     }
     return new Promise(resolve => {
         $.post(opt, (err, resp, data) => {
@@ -142,8 +142,8 @@ function saveTaskRecord(ck,taskId,businessId,taskType) {
                         else{
                             console.log("未获取到活动内容，开始下一个")
                         }
-                        
-                     
+
+
                     } else {
                         $.log("京东返回了空数据")
                     }
@@ -177,7 +177,7 @@ function saveTaskRecord1(ck,taskId,businessId,taskType,uid,tt) {
             "Content-Type": "application/json;charset=UTF-8"
         },
         body : JSON.stringify({ taskId: taskId, taskType: taskType,businessId:businessId,uid:uid,tt:tt }),
-       
+
     }
     return new Promise(resolve => {
         $.post(opt, (err, resp, data) => {
@@ -279,7 +279,7 @@ function getTaskList(ck) {
                         else{
                             console.log("未获取到活动列表，请检查活动")
                         }
-                       
+
                     }
                 }
             } catch (e) {
