@@ -310,31 +310,31 @@ async function main() {
     // await doUserLoveInfo();
 }
 
-async function doUserLoveInfo() {
-    console.log(`助农活动`);
-    let taskLiskInfo = await takeRequest(`newtasksys`, `newtasksys_front/GetUserTaskStatusList`, `&source=jxmc_zanaixin&bizCode=jxmc_zanaixin&dateType=2&showAreaTaskFlag=0&jxpp_wxapp_type=7`, `bizCode%2CdateType%2Cjxpp_wxapp_type%2CshowAreaTaskFlag%2Csource`, false);
-    let taskLisk = taskLiskInfo.userTaskStatusList;
-    for (let i = 0; i < taskLisk.length; i++) {
-        let oneTask = taskLisk[i];
-        if(oneTask.awardStatus === 1){
-            console.log(`任务：${oneTask.taskName},已完成`)
-            continue;
-        }
-        if (oneTask.awardStatus === 2 && oneTask.completedTimes === oneTask.targetTimes) {
-            console.log(`完成任务：${oneTask.taskName}`);
-            awardInfo = await takeRequest(`newtasksys`, `newtasksys_front/Award`, `source=jxmc_zanaixin&taskId=${oneTask.taskId}&bizCode=jxmc_zanaixin`, `bizCode%2Csource%2CtaskId`, true);
-            console.log(`领取爱心成功，获得${JSON.parse(awardInfo.prizeInfo).prizeInfo}`);
-            await $.wait(2000);
-            $.freshFlag = true;
-        }
-        if(oneTask.taskId === 2147 || oneTask.taskId === 2157 || oneTask.taskId === 2167 || oneTask.taskId === 2171){
-            console.log(`去做任务：${oneTask.description}，等待5S`);
-            awardInfo = await takeRequest(`newtasksys`,`newtasksys_front/DoTask`,`source=jxmc_zanaixin&taskId=${oneTask.taskId}&bizCode=jxmc_zanaixin&configExtra=`,`bizCode%2CconfigExtra%2Csource%2CtaskId`,false);
-            await $.wait(5500);
-            console.log(`完成任务：${oneTask.description}`);
-            awardInfo = await takeRequest(`newtasksys`,`newtasksys_front/Award`,`source=jxmc_zanaixin&taskId=${oneTask.taskId}&bizCode=jxmc_zanaixin`,`bizCode%2Csource%2CtaskId`,true);
-            console.log(`领取爱心成功，获得${JSON.parse(awardInfo.prizeInfo).prizeInfo}`);
-        }
+// async function doUserLoveInfo() {
+//     console.log(`助农活动`);
+//     let taskLiskInfo = await takeRequest(`newtasksys`, `newtasksys_front/GetUserTaskStatusList`, `&source=jxmc_zanaixin&bizCode=jxmc_zanaixin&dateType=2&showAreaTaskFlag=0&jxpp_wxapp_type=7`, `bizCode%2CdateType%2Cjxpp_wxapp_type%2CshowAreaTaskFlag%2Csource`, false);
+//     let taskLisk = taskLiskInfo.userTaskStatusList;
+//     for (let i = 0; i < taskLisk.length; i++) {
+//         let oneTask = taskLisk[i];
+//         if(oneTask.awardStatus === 1){
+//             console.log(`任务：${oneTask.taskName},已完成`)
+//             continue;
+//         }
+//         if (oneTask.awardStatus === 2 && oneTask.completedTimes === oneTask.targetTimes) {
+//             console.log(`完成任务：${oneTask.taskName}`);
+//             awardInfo = await takeRequest(`newtasksys`, `newtasksys_front/Award`, `source=jxmc_zanaixin&taskId=${oneTask.taskId}&bizCode=jxmc_zanaixin`, `bizCode%2Csource%2CtaskId`, true);
+//             console.log(`领取爱心成功，获得${JSON.parse(awardInfo.prizeInfo).prizeInfo}`);
+//             await $.wait(2000);
+//             $.freshFlag = true;
+//         }
+//         if(oneTask.taskId === 2147 || oneTask.taskId === 2157 || oneTask.taskId === 2167 || oneTask.taskId === 2171){
+//             console.log(`去做任务：${oneTask.description}，等待5S`);
+//             awardInfo = await takeRequest(`newtasksys`,`newtasksys_front/DoTask`,`source=jxmc_zanaixin&taskId=${oneTask.taskId}&bizCode=jxmc_zanaixin&configExtra=`,`bizCode%2CconfigExtra%2Csource%2CtaskId`,false);
+//             await $.wait(5500);
+//             console.log(`完成任务：${oneTask.description}`);
+//             awardInfo = await takeRequest(`newtasksys`,`newtasksys_front/Award`,`source=jxmc_zanaixin&taskId=${oneTask.taskId}&bizCode=jxmc_zanaixin`,`bizCode%2Csource%2CtaskId`,true);
+//             console.log(`领取爱心成功，获得${JSON.parse(awardInfo.prizeInfo).prizeInfo}`);
+//         }
 
         if(oneTask.taskId === 2154 && oneTask.completedTimes !== 1){
             console.log(`去做任务：${oneTask.description}，等待5S`);
