@@ -283,8 +283,8 @@ async function doJoyMergeAll(activityJoyList) {
   let joyBaseInfo = await getJoyBaseInfo()
   let fastBuyLevel = joyBaseInfo.fastBuyLevel
   if (joyMinLevelArr.length >= 2) {
-    $.log(`开始合成 ${minLevel} ${joyMinLevelArr[0].id} <=> ${joyMinLevelArr[1].id} 【限流严重，8秒后合成！如失败会重试】`);
-    await $.wait(8000)
+    $.log(`开始合成 ${minLevel} ${joyMinLevelArr[0].id} <=> ${joyMinLevelArr[1].id} 【限流严重，10秒后合成！如失败会重试】`);
+    await $.wait(10000)
     await doJoyMerge(joyMinLevelArr[0].id, joyMinLevelArr[1].id);
     await getJoyList()
     await doJoyMergeAll($.activityJoyList)
