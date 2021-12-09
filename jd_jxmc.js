@@ -336,30 +336,30 @@ async function main() {
 //             console.log(`领取爱心成功，获得${JSON.parse(awardInfo.prizeInfo).prizeInfo}`);
 //         }
 
-        if(oneTask.taskId === 2154 && oneTask.completedTimes !== 1){
-            console.log(`去做任务：${oneTask.description}，等待5S`);
-            awardInfo = await takeRequest(`jxmc`,`operservice/GetInviteStatus`,``,undefined,true);
-            await $.wait(5500);
-            console.log(`完成任务：${oneTask.description}`);
-            awardInfo = await takeRequest(`newtasksys`,`newtasksys_front/Award`,`source=jxmc_zanaixin&taskId=${oneTask.taskId}&bizCode=jxmc_zanaixin`,`bizCode%2Csource%2CtaskId`,true);
-            if(awardInfo && awardInfo.prizeInfo && JSON.parse(awardInfo.prizeInfo)){
-                console.log(`领取爱心成功，获得${JSON.parse(awardInfo.prizeInfo).prizeInfo || ''}`);
-            }else{
-                console.log(`领取爱心：${JSON.stringify(awardInfo)}`);
-            }
-        }
-    }
-    let userLoveInfo = await takeRequest(`jxmc`, `queryservice/GetUserLoveInfo`, ``, undefined, true);
-    let lovelevel = userLoveInfo.lovelevel;
-    for (let i = 0; i < lovelevel.length; i++) {
-        if(lovelevel[i].drawstatus === 1){
-            console.log(`抽取红包`);
-            let drawLoveHongBao =await takeRequest(`jxmc`, `operservice/DrawLoveHongBao`, `&lovevalue=${lovelevel[i].lovevalue}`, `activeid%2Cactivekey%2Cchannel%2Cjxmc_jstoken%2Clovevalue%2Cphoneid%2Csceneid%2Ctimestamp`, true);
-            console.log(`抽取结果：${JSON.stringify(drawLoveHongBao)}`);
-            await $.wait(3000);
-        }
-    }
-}
+//         if(oneTask.taskId === 2154 && oneTask.completedTimes !== 1){
+//             console.log(`去做任务：${oneTask.description}，等待5S`);
+//             awardInfo = await takeRequest(`jxmc`,`operservice/GetInviteStatus`,``,undefined,true);
+//             await $.wait(5500);
+//             console.log(`完成任务：${oneTask.description}`);
+//             awardInfo = await takeRequest(`newtasksys`,`newtasksys_front/Award`,`source=jxmc_zanaixin&taskId=${oneTask.taskId}&bizCode=jxmc_zanaixin`,`bizCode%2Csource%2CtaskId`,true);
+//             if(awardInfo && awardInfo.prizeInfo && JSON.parse(awardInfo.prizeInfo)){
+//                 console.log(`领取爱心成功，获得${JSON.parse(awardInfo.prizeInfo).prizeInfo || ''}`);
+//             }else{
+//                 console.log(`领取爱心：${JSON.stringify(awardInfo)}`);
+//             }
+//         }
+//     }
+//     let userLoveInfo = await takeRequest(`jxmc`, `queryservice/GetUserLoveInfo`, ``, undefined, true);
+//     let lovelevel = userLoveInfo.lovelevel;
+//     for (let i = 0; i < lovelevel.length; i++) {
+//         if(lovelevel[i].drawstatus === 1){
+//             console.log(`抽取红包`);
+//             let drawLoveHongBao =await takeRequest(`jxmc`, `operservice/DrawLoveHongBao`, `&lovevalue=${lovelevel[i].lovevalue}`, `activeid%2Cactivekey%2Cchannel%2Cjxmc_jstoken%2Clovevalue%2Cphoneid%2Csceneid%2Ctimestamp`, true);
+//             console.log(`抽取结果：${JSON.stringify(drawLoveHongBao)}`);
+//             await $.wait(3000);
+//         }
+//     }
+// }
 
 async function buyChick(configInfo,homePageInfo,cardInfo){
     console.log(`现共有小鸡：${homePageInfo.petinfo.length}只,小鸡上限：6只`);
