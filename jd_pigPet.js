@@ -27,7 +27,7 @@ const MISSION_BASE_API = `https://ms.jr.jd.com/gw/generic/mission/h5/m`;
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-let shareId = ["t_7LVGP8mopofh8AG0Q7E8AdoUJQ3Dik", "0IzWPVQGlmepafqlqgOSXw", "zExA7lNc3HrJrbVuG3xRVMAdoUJQ3Dik", "cvwWiz9o2evNHFdNk0oNbMAdoUJQ3Dik"][Math.floor((Math.random() * 4))];
+let shareId = [];
 $.shareCodes = [];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -44,7 +44,7 @@ if ($.isNode()) {
     return;
   }
   await getShareCode();
-  console.log(`\n【原作者：LXK大佬】\n\nBy：zero205\n添加：邀请新用户，大转盘助力，抢粮食\n修改：优化日志输出，自动喂食\n\n默认不抢粮食（成功机率小），需要的请添加变量JD_PIGPET_PK，值填true\n`);
+  console.log(`\n【原作者：LXK大佬】\n\nBy：zero205\n添加：邀请新用户，大转盘助力，抢粮食\n修改：优化日志输出，自动喂食\n\n默认不抢粮食（成功机率小），需要的请添加变量JD_PIGPET_PK，值填true\nTodo：领取成就奖励\n`);
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -78,7 +78,7 @@ if ($.isNode()) {
       }
     }
   }
-  if (process.env.PIGNF != 'false' && allMessage && new Date().getHours() % 6 === 0) {
+  if (process.env.PIGNF != 'false' && allMessage) {
     if ($.isNode()) await notify.sendNotify($.name, allMessage);
     $.msg($.name, '', allMessage);
   }
@@ -276,7 +276,7 @@ function pigPetLogin() {
               if (data.resultData.resultCode === 0) {
                 $.hasPig = data.resultData.resultData.hasPig;
                 if (!$.hasPig) {
-                  console.log(`\n京东账号${$.index} ${$.nickName} 未开启养猪活动,请手动去京东金融APP->我的->养猪猪开启此活动\n`)
+                  console.log(`\n京东账号${$.index} ${$.nickName} 未开启养猪活动,请手动去京东金融APP开启此活动或复制口令直达：\n29.0复制整段话 Https:/JWHOjEv6wgo0BQ 我的5斤百香果能领取啦，来养猪，一起赚#0E4EfAMIKuyDlW%打kai>【ぺ京倲金融ぺ App】～\n`)
                   return
                 }
                 if (data.resultData.resultData.wished) {
