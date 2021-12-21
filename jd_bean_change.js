@@ -81,7 +81,7 @@ let doExJxBeans ="false";
 let time = new Date().getHours();
 if ($.isNode()) {
 	if(process.env.BEANCHANGE_ExJxBeans=="true"){
-		if (time >= 17){ 
+		if (time >= 17){
 			console.log(`检测到设定了临期京豆转换喜豆...`);
 			doExJxBeans = process.env.BEANCHANGE_ExJxBeans;
 		} else{
@@ -93,7 +93,7 @@ let doCheckJxBeans ="false";
 if ($.isNode()) {
 	if(process.env.BEANCHANGE_CheckJxBeans=="true"){
 		console.log(`检测到设定了查询喜豆信息...`);
-		doCheckJxBeans = process.env.BEANCHANGE_ExJxBeans;	
+		doCheckJxBeans = process.env.BEANCHANGE_ExJxBeans;
 	}
 }
 if ($.isNode() && process.env.BEANCHANGE_PERSENT) {
@@ -130,10 +130,10 @@ if ($.isNode() && process.env.BEANCHANGE_DISABLECASH) {
 //}
 
 if ($.isNode() && process.env.BEANCHANGE_ALLNOTIFY) {
-	
+
 	var strTempNotify=process.env.BEANCHANGE_ALLNOTIFY ? process.env.BEANCHANGE_ALLNOTIFY.split('&') : [];
 	if (strTempNotify.length > 0) {
-		for (var TempNotifyl in strTempNotify) {					
+		for (var TempNotifyl in strTempNotify) {
 			strAllNotify+=strTempNotify[TempNotifyl]+'\n';
 		}
 	}
@@ -209,12 +209,12 @@ if ($.isNode()) {
 			$.JingXiang = "";
 			$.allincomeBean = 0; //月收入
 			$.allexpenseBean = 0; //月支出
-			$.joylevel = 0;	
+			$.joylevel = 0;
 			$.beanChangeXi=0;
 			$.inJxBean=0;
 			$.OutJxBean=0;
 			$.todayinJxBean=0;
-			$.todayOutJxBean=0;	
+			$.todayOutJxBean=0;
 			$.xibeanCount = 0;
 			TempBaipiao = "";
 			strGuoqi="";
@@ -249,7 +249,7 @@ if ($.isNode()) {
 			await requestAlgo();
 			await JxmcGetRequest();
 			await bean();
-			
+
 			if (llShowMonth) {
 				console.log("开始获取月数据，请稍后...");
 				await Monthbean();
@@ -341,7 +341,7 @@ if ($.isNode()) {
 			if ($.isNode() && allMessage) {
 				if(strAllNotify)
 					allMessage=strAllNotify+`\n`+allMessage;
-				
+
 				await notify.sendNotify(`${$.name}`, `${allMessage}`, {
 					url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean`
 				})
@@ -381,7 +381,7 @@ if ($.isNode()) {
 		if ($.isNode() && allMessage) {
 			if(strAllNotify)
 				allMessage=strAllNotify+`\n`+allMessage;
-			
+
 			await notify.sendNotify(`${$.name}`, `${allMessage}`, {
 				url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean`
 			})
@@ -455,7 +455,7 @@ async function showMsg() {
 	//return
 	ReturnMessageTitle="";
 	ReturnMessage = "";
-	
+
 	if (MessageUserGp2) {
 		userIndex2 = MessageUserGp2.findIndex((item) => item === $.pt_pin);
 	}
@@ -465,7 +465,7 @@ async function showMsg() {
 	if (MessageUserGp4) {
 		userIndex4 = MessageUserGp4.findIndex((item) => item === $.pt_pin);
 	}
-	
+
 	if (userIndex2 != -1) {
 		IndexGp2 += 1;
 		ReturnMessageTitle = `【账号${IndexGp2}🆔】${$.nickName || $.UserName}\n`;
@@ -555,17 +555,17 @@ async function showMsg() {
 	if ($.expenseBean != 0) {
 		ReturnMessage += `,支${$.expenseBean}豆`;
 	}
-	ReturnMessage += `\n`;	
+	ReturnMessage += `\n`;
 
-	if ($.beanCount){		
-		ReturnMessage += `【当前京豆】${$.beanCount}豆(≈${(($.beanCount-$.beanChangeXi)/ 100).toFixed(2)}元)\n`;		
+	if ($.beanCount){
+		ReturnMessage += `【当前京豆】${$.beanCount}豆(≈${(($.beanCount-$.beanChangeXi)/ 100).toFixed(2)}元)\n`;
 	} else {
 		if($.levelName || $.JingXiang)
 			ReturnMessage += `【当前京豆】获取失败,接口返回空数据\n`;
 		else
-			ReturnMessage += `【当前京豆】${$.beanCount}豆(≈${(($.beanCount-$.beanChangeXi)/ 100).toFixed(2)}元)\n`;	
+			ReturnMessage += `【当前京豆】${$.beanCount}豆(≈${(($.beanCount-$.beanChangeXi)/ 100).toFixed(2)}元)\n`;
 	}
-	
+
 	if (doCheckJxBeans == "true") {
 		ReturnMessage += `【今日喜豆】收${$.todayinJxBean}豆`;
 
@@ -719,7 +719,7 @@ async function showMsg() {
 		TempBaipiao += `【京喜工厂】${$.jxFactoryReceive} 可以兑换了!\n`;
 
 	}
-	
+
 	llPetError=false;
 	const response = await PetRequest('energyCollect');
 	const initPetTownRes = await PetRequest('initPetTown');
@@ -779,14 +779,14 @@ async function showMsg() {
 			}
 		}
 	}
-	if(strGuoqi){		
+	if(strGuoqi){
 		ReturnMessage += `💸💸💸临期京豆明细💸💸💸\n`;
 		ReturnMessage += `${strGuoqi}`;
 	}
 	ReturnMessage += `🧧🧧🧧红包明细🧧🧧🧧\n`;
 	ReturnMessage += `${$.message}`;
-	
-	
+
+
 	if (userIndex2 != -1) {
 		allMessageGp2 += ReturnMessageTitle+ReturnMessage + `\n`;
 	}
@@ -803,7 +803,9 @@ async function showMsg() {
 	console.log(`${ReturnMessageTitle+ReturnMessage}`);
 
 	if ($.isNode() && WP_APP_TOKEN_ONE) {
+		var strTitle="京东资产变动";
 		if (TempBaipiao) {
+			strTitle="京东资产变动及活动领取";
 			TempBaipiao = `【⏰商品白嫖活动提醒⏰】\n` + TempBaipiao;
 			ReturnMessage = TempBaipiao + `\n` + ReturnMessage;
 		}
@@ -811,8 +813,8 @@ async function showMsg() {
 		ReturnMessage += RemainMessage;
 		if(strAllNotify)
 			ReturnMessage=strAllNotify+`\n`+ReturnMessage;
-		
-		await notify.sendNotifybyWxPucher(`${$.name}`, `${ReturnMessage}`, `${$.UserName}`);
+
+		await notify.sendNotifybyWxPucher(strTitle, `${ReturnMessage}`, `${$.UserName}`);
 	}
 
 	//$.msg($.name, '', ReturnMessage , {"open-url": "https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean"});
@@ -881,19 +883,19 @@ async function bean() {
 	}
 	$.todayOutcomeBean = -$.todayOutcomeBean;
 	$.expenseBean = -$.expenseBean;
-	
+
 	decExBean =0;
 	await queryexpirejingdou();//过期京豆
 	if(decExBean && doExJxBeans=="true"){
 		var jxbeans = await exchangejxbeans(decExBean);
-		if (jxbeans) {			
+		if (jxbeans) {
 			$.beanChangeXi=decExBean;
 			console.log(`已为您将`+decExBean+`临期京豆转换成喜豆！`);
 			strGuoqi += `已为您将`+decExBean+`临期京豆转换成喜豆！\n`;
 		}
 	}
-	
-	await redPacket(); 
+
+	await redPacket();
 }
 
 async function Monthbean() {
@@ -1133,12 +1135,12 @@ function TotalBean2() {
 				if (err) {
 					$.logErr(err);
 				} else {
-					if (data) {						
-						data = JSON.parse(data);						
+					if (data) {
+						data = JSON.parse(data);
 						if (!data.user) {
 							return;
 						}
-						const userInfo = data.user;						
+						const userInfo = data.user;
 						if (userInfo) {
 							if (!$.nickName)
 								$.nickName = userInfo.petName;
@@ -1254,14 +1256,14 @@ function queryexpirejingdou() {
 					if (data) {
 						// console.log(data)
 						data = JSON.parse(data.slice(23, -13));
-						if (data.ret === 0) {							
+						if (data.ret === 0) {
 							data['expirejingdou'].map(item => {
-								if(item['expireamount']!=0){																	
+								if(item['expireamount']!=0){
 									strGuoqi+=`【${timeFormat(item['time'] * 1000)}】过期${item['expireamount']}豆\n`;
 									if (decExBean==0)
 										decExBean=item['expireamount'];
 								}
-							})							
+							})
 						}
 					} else {
 						console.log(`京东服务器返回空数据`)
@@ -1278,7 +1280,7 @@ function queryexpirejingdou() {
 }
 function exchangejxbeans(o) {
     return new Promise(async resolve => {
-		var UUID = getUUID('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');		
+		var UUID = getUUID('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
 		var JXUA = `jdpingou;iPhone;4.13.0;14.4.2;${UUID};network/wifi;model/iPhone10,2;appBuild/100609;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`;
         const options = {
             "url": `https://m.jingxi.com/deal/masset/jd2xd?use=${o}&canpintuan=&setdefcoupon=0&r=${Math.random()}&sceneval=2`,
@@ -1416,7 +1418,7 @@ function getJdZZ() {
 					console.log(`京东赚赚API请求失败，请检查网路重试`);
 				} else {
 					if (safeGet(data)) {
-						data = JSON.parse(data);						
+						data = JSON.parse(data);
 						$.JdzzNum = data.data.totalNum;
 					}
 				}
@@ -2016,8 +2018,8 @@ function GetJxBeanDetailData() {
             console.log(JSON.stringify(err));
             console.log(`GetJxBeanDetailData请求失败，请检查网路重试`);
           } else {
-            data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);      
-            
+            data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
+
           }
         } catch (e) {
           $.logErr(e, resp);
@@ -2035,7 +2037,7 @@ function GetJxBeanInfo() {
             console.log(JSON.stringify(err));
             console.log(`GetJxBeanInfo请求失败，请检查网路重试`);
           } else {
-            data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);      
+            data = JSON.parse(data.match(new RegExp(/jsonpCBK.?\((.*);*/))[1]);
             if(data){
 				if(data.errcode==0){
 					$.xibeanCount=data.data.xibean;
@@ -2101,7 +2103,7 @@ async function jxbean() {
 }
 
 
-	
+
 function randomString(e) {
 	e = e || 32;
 	let t = "0123456789abcdef",
