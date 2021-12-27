@@ -288,12 +288,12 @@ function pigPetLogin() {
               if (data.resultData.resultCode === 0) {
                 $.hasPig = data.resultData.resultData.hasPig;
                 if (!$.hasPig) {
-                  console.log(`\n京东账号${$.index} ${$.nickName} 未开启养猪活动,请手动去京东金融APP开启此活动或复制口令直达：\n29.0复制整段话 Https:/JWHOjEv6wgo0BQ 我的5斤百香果能领取啦，来养猪，一起赚#0E4EfAMIKuyDlW%打kai>【ぺ京倲金融ぺ App】～\n`)
+                  console.log(`\n京东账号${$.index} ${$.nickName} 未开启养猪活动,请手动去京东金融APP->我的->养猪猪开启此活动`)
                   return
                 }
                 if (data.resultData.resultData.wished) {
                   if (data.resultData.resultData.wishAward) {
-                    allMessage += `京东账号${$.index} ${$.nickName || $.UserName}\n${data.resultData.resultData.wishAward.name}已可兑换${$.index !== cookiesArr.length ? '\n\n' : ''}`
+                    allMessage += `京东账号${$.index} ${$.nickName || $.UserName}\n${data.resultData.resultData.wishAward.name}已可兑换\n请速去京东金融APP->我的->养猪猪进行兑换${$.index !== cookiesArr.length ? '\n\n' : ''}`
                     console.log(`【京东账号${$.index}】${$.nickName || $.UserName} ${data.resultData.resultData.wishAward.name}已可兑换，请及时去京东金融APP领取`)
                     $.finish = true
                   }
