@@ -41,7 +41,7 @@ if ($.isNode()) {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
-let author_codes = ['oe37W64MY2ZAYhCrCpeJ91Jy3zmL','-ryUXP5eZ2IXZRbCSN_E80R_EoHW0-zH'].sort(() => 0.5 - Math.random())
+let author_codes = ['yilkH0w-l6IdforWW5gzml1kpJHFkUVWfxVy2OhyTpY','yRFaHXITlo44Ms_WF5h_mkEHYVU0DyRXT6NChjTE'].sort(() => 0.5 - Math.random())
 const self_code = []
 let pool = []
 !(async () => {
@@ -64,14 +64,6 @@ let pool = []
   //   cookiesArr = cookiesArr.sort(() => 0.5 - Math.random())
   //   console.log('CK顺序打乱!用来随机内部互助!,如需关闭CT_R为false')
   // }
-  console.log('明日可能默认开启CK打乱（随机内部互助）,如需关闭请提前设置CT_R为false')
-  let res = await getAuthorShareCode('https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/city.json')
-  if (!res) {
-    res = await getAuthorShareCode('https://raw.fastgit.org/zero205/updateTeam/main/shareCodes/city.json')
-  }
-  if (res) {
-    author_codes = res.sort(() => 0.5 - Math.random())
-  }
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -342,7 +334,8 @@ function shareCodesFormat() {
     // }
     if ($.index == 1) {
       console.log('首个帐号,助力作者和池子')
-      $.newShareCodes = [...new Set([...author_codes,...pool,...$.newShareCodes])]
+      // $.newShareCodes = [...new Set([...author_codes,...pool,...$.newShareCodes])]
+      $.newShareCodes = [...new Set([...$.newShareCodes,...self_code,...author_codes,...pool])]
     } else{
       // console.log('非首个帐号,助力池子')
       // $.newShareCodes = [...new Set([...$.newShareCodes,...pool])]
