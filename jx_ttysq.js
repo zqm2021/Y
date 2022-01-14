@@ -1,6 +1,7 @@
 /*
 #天天压岁钱
-33 0,13 * * * jd_ttysq.js
+京喜App-下方中间-天天压岁钱
+33 0,14,20 * * * jx_ttysq.js
 
 #############
 PS:(不是玩代码的人，写代码有bug很正常！！)
@@ -51,22 +52,25 @@ const JD_API_HOST = `https://m.jingxi.com`;
             console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
             //做任务
             await main()
+            if (i != cookiesArr.length - 1) {
+                await $.wait(3000)
+            }
         }
     }
-    let res = await getAuthorShareCode('https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/ttysq.json')
+    let res = await getAuthorShareCode('https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/ttysq2.json')
     if (!res) {
-        res = await getAuthorShareCode('https://raw.fastgit.org/zero205/updateTeam/main/shareCodes/ttysq.json')
+        res = await getAuthorShareCode('https://raw.fastgit.org/zero205/updateTeam/main/shareCodes/ttysq2.json')
     }
     if (res) {
         authorCode = res.sort(() => 0.5 - Math.random())
         if (authorCode.length > 3) {
             authorCode = authorCode.splice(0, 3)
         }
-        authorCode = authorCode.map(code => {
+        authorCode = authorCode.map(entity => {
             return {
                 "user": "author",
-                "code": code,
-                "redId": Math.floor(1 + Math.random() * 10),
+                "code": entity.code,
+                "redId": entity.rpids[Math.floor((Math.random() * entity.rpids.length))],
                 "beHelp": 0,
                 "helpId": $.taskId
             }
@@ -97,7 +101,7 @@ const JD_API_HOST = `https://m.jingxi.com`;
                         console.log(`\n京东账号${$.index} ${$.nickName || $.UserName}去助力${$.shareCoseList[y].user}助力码${$.shareCoseList[y].code}`)
                         console.log(`助力任务`)
                         await task(`jxnhj/DoTask`, `taskId=${$.taskId}&strShareId=${$.shareCoseList[y].code}&bizCode=jxnhj_task&configExtra=`);
-                        //if ($.max === true){}
+                        if ($.max === true){$.shareCoseList[y].beHelp = false}
                         await $.wait(3000);
                         if ($.canHelp === false) { break }
                     }
