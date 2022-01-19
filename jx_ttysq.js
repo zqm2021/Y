@@ -54,7 +54,7 @@ const JD_API_HOST = `https://m.jingxi.com`;
             //做任务
             await main()
             if (i != cookiesArr.length - 1) {
-                await $.wait(3000)
+                await $.wait(5000)
             }
         }
     }
@@ -103,12 +103,15 @@ const JD_API_HOST = `https://m.jingxi.com`;
                         console.log(`助力任务`)
                         await task(`jxnhj/DoTask`, `taskId=${$.taskId}&strShareId=${$.shareCoseList[y].code}&bizCode=jxnhj_task&configExtra=`);
                         if ($.max === true){$.shareCoseList[y].beHelp = false}
-                        await $.wait(3000);
+                        await $.wait(8000);
                         if ($.canHelp === false) { break }
                     }
                 }
             }
         }
+        if (i != cookiesArr.length - 1) {
+                await $.wait(5000)
+            }
     };
     //助力红包
     for (let i = 0; i < cookiesArr.length; i++) {
@@ -378,7 +381,7 @@ function getToken(timeout = 0) {
 
 function taskUrl(function_path, body = '', dwEnv = 7) {
     let url = `${JD_API_HOST}/${function_path}?__t=${Date.now()}&dwEnv=${dwEnv}&${body}&_stk=__t%2CbizCode%2CconfigExtra%2CdwEnv%2CstrShareId%2CtaskId&_ste=1`;
-    url += `&h5st=${Date.now(), '', '', url}&_=${Date.now() + 2}&sceneval=2&g_login_type=1&g_ty=ajax`;
+    url += `&h5st=${Date.now(), '', '', url}&sceneval=2&g_login_type=1&g_ty=ajax`;
     return {
         url,
         headers: {
@@ -400,7 +403,7 @@ function taskPostUrl(functionId, body = {}) {
         url: `${JD_API_HOST}?functionId=${functionId}`,
         body: `functionId=${functionId}&body=${JSON.stringify(body)}&_t=${Date.now()}&appid=activities_platform&client=wh5&clientVersion=1.0.0`,
         headers: {
-            'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+            'User-Agent': UA,
             'Content-Type': 'application/x-www-form-urlencoded',
             'Host': 'api.m.jd.com',
             'Cookie': cookie,
