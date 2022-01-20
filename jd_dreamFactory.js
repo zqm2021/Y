@@ -654,19 +654,7 @@ function userInfo() {
                 $.productionId = production.productionId;//商品ID
                 $.commodityDimId = production.commodityDimId;
                 $.encryptPin = data.user.encryptPin;
-                // ***************************
-                // 报告运行次数
-                if (ZLC) {
-                  for (let k = 0; k < 5; k++) {
-                    try {
-                      await runTimes()
-                      break
-                    } catch (e) {
-                    }
-                    await $.wait(Math.floor(Math.random() * 10 + 3) * 1000)
-                  }
-                }
-                // ***************************
+
                 // subTitle = data.user.pin;
                 await GetCommodityDetails();//获取已选购的商品信息
                 if (productionStage['productionStageAwardStatus'] === 1) {
@@ -733,21 +721,7 @@ function userInfo() {
     })
   })
 }
-function runTimes() {
-  return new Promise((resolve, reject) => {
-    $.get({
-      url: `https://api.jdsharecode.xyz/api/runTimes?activityId=jxfactory&sharecode=${$.encryptPin}`
-    }, (err, resp, data) => {
-      if (err) {
-        console.log('上报失败', err)
-        reject(err)
-      } else {
-        console.log(data)
-        resolve()
-      }
-    })
-  })
-}
+
 //查询当前生产的商品名称
 function GetCommodityDetails() {
   return new Promise(async resolve => {
@@ -1369,16 +1343,16 @@ async function exchangeProNotify() {
       let flag = true;
       if ((exchangeEndTime - nowTimes.getTime()) <= 3600000 * 4) {
         let expiredTime = parseFloat(((exchangeEndTime - nowTimes.getTime()) / (60 * 60 * 1000)).toFixed(1))
-        $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}${expiredTime}小时后兑换超时\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->我的->京喜工厂进行兑换`, { 'open-url': jxOpenUrl, 'media-url': $.picture })
-        // if ($.isNode()) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}${(exchangeEndTime - nowTimes) / 60*60*1000}分钟后兑换超时\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->我的->京喜工厂进行兑换`, { url: jxOpenUrl })
-        if ($.isNode() && (`${notifyLevel}` === '1' || `${notifyLevel}` === '2' || `${notifyLevel}` === '3')) allMessage += `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}${expiredTime}小时后兑换超时\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->我的->京喜工厂进行兑换${$.index !== cookiesArr.length ? '\n\n' : ''}`
+        $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}${expiredTime}小时后兑换超时\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->首页->好物0元造进行兑换`, { 'open-url': jxOpenUrl, 'media-url': $.picture })
+        // if ($.isNode()) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}${(exchangeEndTime - nowTimes) / 60*60*1000}分钟后兑换超时\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->首页->好物0元造进行兑换`, { url: jxOpenUrl })
+        if ($.isNode() && (`${notifyLevel}` === '1' || `${notifyLevel}` === '2' || `${notifyLevel}` === '3')) allMessage += `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}${expiredTime}小时后兑换超时\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->首页->好物0元造进行兑换${$.index !== cookiesArr.length ? '\n\n' : ''}`
         flag = false;
       }
       //二:在可兑换的时候，0,2,4等每2个小时通知一次
       if (nowHours % 2 === 0 && flag) {
-        $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}已可兑换\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->我的->京喜工厂进行兑换`, { 'open-url': jxOpenUrl, 'media-url': $.picture })
-        // if ($.isNode()) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}已可兑换\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->我的->京喜工厂进行兑换`, { url: jxOpenUrl })
-        if ($.isNode() && (`${notifyLevel}` === '1' || `${notifyLevel}` === '2' || `${notifyLevel}` === '3')) allMessage += `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}已可兑换\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->我的->京喜工厂进行兑换${$.index !== cookiesArr.length ? '\n\n' : ''}`
+        $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}已可兑换\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->首页->好物0元造进行兑换`, { 'open-url': jxOpenUrl, 'media-url': $.picture })
+        // if ($.isNode()) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}已可兑换\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->首页->好物0元造进行兑换`, { url: jxOpenUrl })
+        if ($.isNode() && (`${notifyLevel}` === '1' || `${notifyLevel}` === '2' || `${notifyLevel}` === '3')) allMessage += `【京东账号${$.index}】${$.nickName}\n【生产商品】${$.productName}已可兑换\n【兑换截止时间】${$.exchangeEndTime}\n请速去京喜APP->首页->好物0元造进行兑换${$.index !== cookiesArr.length ? '\n\n' : ''}`
       }
     }
   }
@@ -1399,7 +1373,7 @@ async function showMsg() {
 function readShareCode() {
   console.log(`开始`)
   return new Promise(async resolve => {
-    $.get({url: `https://api.jdsharecode.xyz/api/jxfactory/${randomCount}`, 'timeout': 10000}, (err, resp, data) => {
+    $.get({url: `https://transfer.nz.lu/jxfactory`, 'timeout': 10000}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
