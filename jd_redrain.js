@@ -77,7 +77,7 @@ if ($.isNode()) {
       console.log(`\n甘露殿【https://t.me/jdredrain】提醒你:RRA: "${$.activityId}"不符合规则\n`);
       continue;
     }
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < cookiesArr.length; i++) {
       if (cookiesArr[i]) {
         cookie = cookiesArr[i];
         $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
