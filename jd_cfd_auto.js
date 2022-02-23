@@ -19,7 +19,6 @@ $.result = [];
 $.shareCodes = [];
 let cookiesArr = [], cookie = '', token = '';
 let UA, UAInfo = {};
-let nowTimes;
 const randomCount = $.isNode() ? 20 : 3;
 $.appId = "92a36";
 function oc(fn, defaultVal) {//optioanl chaining
@@ -117,7 +116,6 @@ if ($.isNode()) {
 
 async function cfd() {
   try {
-    nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000)
     let beginInfo = await getUserInfo();
     if (beginInfo.LeadInfo.dwLeadType === 2) {
       console.log(`还未开通活动，尝试初始化`)
@@ -130,6 +128,10 @@ async function cfd() {
         console.log(`初始化失败\n`)
         return
       }
+    }
+
+    if (!beginInfo.MarkList.daily_task_win) {
+      await setMark()
     }
 
     // 寻宝
@@ -175,7 +177,7 @@ async function cfd() {
     await $.wait(2000)
     for(let key of Object.keys($.info.buildInfo.buildList)) {
       let vo = $.info.buildInfo.buildList[key]
-      let body = `strBuildIndex=${vo.strBuildIndex}`
+      let body = `strBuildIndex=${vo.strBuildIndex}&dwType=1`
       await getBuildInfo(body, vo)
       await $.wait(2000)
     }
@@ -823,6 +825,7 @@ async function getActTask(type = true) {
             for (let key of Object.keys(data.Data.TaskList)) {
               let vo = data.Data.TaskList[key]
               if ([0, 1, 2].includes(vo.dwOrderId) && (vo.dwCompleteNum !== vo.dwTargetNum) && vo.dwTargetNum < 10) {
+                if (vo.strTaskName === "升级1个建筑") continue
                 console.log(`开始【🐮牛牛任务】${vo.strTaskName}`)
                 for (let i = vo.dwCompleteNum; i < vo.dwTargetNum; i++) {
                   console.log(`【🐮牛牛任务】${vo.strTaskName} 进度：${i + 1}/${vo.dwTargetNum}`)
@@ -966,7 +969,7 @@ async function getBuildInfo(body, buildList, type = true) {
             console.log(`【${buildNmae}】升级需要${data.ddwNextLvlCostCoin}金币，保留升级需要的3倍${data.ddwNextLvlCostCoin * 3}金币，当前拥有${$.info.ddwCoinBalance}金币`)
             if(data.dwCanLvlUp > 0 && $.info.ddwCoinBalance >= (data.ddwNextLvlCostCoin * 3)) {
               console.log(`【${buildNmae}】满足升级条件，开始升级`)
-              const body = `ddwCostCoin=${data.ddwNextLvlCostCoin}&strBuildIndex=${data.strBuildIndex}`
+              const body = `strBuildIndex=${data.strBuildIndex}&ddwCostCoin=${data.ddwNextLvlCostCoin}`
               await $.wait(2000)
               let buildLvlUpRes = await buildLvlUp(body)
               if (buildLvlUpRes.iRet === 0) {
@@ -1116,17 +1119,36 @@ function getAuthorShareCode(url) {
   })
 }
 
+function setMark() {
+  return new Promise(resolve => {
+    $.get(taskUrl("user/SetMark", `strMark=daily_task_win&strValue=1&dwType=1`), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`);
+          console.log(`${$.name} SetMark API请求失败，请检查网路重试`);
+        } else {
+          data = JSON.parse(data.replace(/\n/g, "").match(new RegExp(/jsonpCBK.?\((.*);*\)/))[1]);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally{
+        resolve();
+      }
+    })
+  })
+}
+
 // 获取用户信息
 function getUserInfo(showInvite = true) {
   return new Promise(async (resolve) => {
-    $.get(taskUrl(`user/QueryUserInfo`, `ddwTaskId=&strShareId=&strMarkList=${encodeURIComponent('guider_step,collect_coin_auth,guider_medal,guider_over_flag,build_food_full,build_sea_full,build_shop_full,build_fun_full,medal_guider_show,guide_guider_show,guide_receive_vistor,daily_task,guider_daily_task')}&strPgUUNum=${token['farm_jstoken']}&strPgtimestamp=${token['timestamp']}&strPhoneID=${token['phoneid']}`), async (err, resp, data) => {
+    $.get(taskUrl(`user/QueryUserInfo`, `ddwTaskId=&strShareId=&strMarkList=${encodeURIComponent('guider_step,collect_coin_auth,guider_medal,guider_over_flag,build_food_full,build_sea_full,build_shop_full,build_fun_full,medal_guider_show,guide_guider_show,guide_receive_vistor,daily_task,guider_daily_task,cfd_has_show_selef_point,choose_goods_has_show,daily_task_win,new_user_task_win,guider_new_user_task,guider_daily_task_icon,guider_nn_task_icon,tool_layer,new_ask_friend_m')}&strPgtimestamp=${token['timestamp']}&strPhoneID=${token['phoneid']}&strPgUUNum=${token['farm_jstoken']}&strVersion=1.0.1&dwIsReJoin=1`), async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} QueryUserInfo API请求失败，请检查网路重试`)
         } else {
           data = JSON.parse(data.replace(/\n/g, "").match(new RegExp(/jsonpCBK.?\((.*);*\)/))[1]);
-          $.showPp = nc(oc(() => data.AreaAddr.dwIsSHowPp), 0)
+          $.showPp = data?.AreaAddr?.dwIsSHowPp ?? 0
           const {
             buildInfo = {},
             ddwRichBalance,
@@ -1137,7 +1159,8 @@ function getUserInfo(showInvite = true) {
             LeadInfo = {},
             StoryInfo = {},
             Business = {},
-            XbStatus = {}
+            XbStatus = {},
+            MarkList = {}
           } = data;
           if (showInvite) {
             console.log(`获取用户信息：${sErrMsg}\n${$.showLog ? data : ""}`);
@@ -1158,7 +1181,8 @@ function getUserInfo(showInvite = true) {
             dwLandLvl,
             LeadInfo,
             StoryInfo,
-            XbStatus
+            XbStatus,
+            MarkList
           };
           resolve({
             buildInfo,
@@ -1167,7 +1191,8 @@ function getUserInfo(showInvite = true) {
             strMyShareId,
             LeadInfo,
             StoryInfo,
-            XbStatus
+            XbStatus,
+            MarkList
           });
         }
       } catch (e) {
@@ -1271,7 +1296,7 @@ function browserTask(taskType) {
     switch (taskType) {
       case 0://日常任务
         for (let i = 0; i < $.allTask.length; i++) {
-          const start = $.allTask[i].completedTimes, end = $.allTask[i].targetTimes, bizCode = nc(oc(() => $.allTask[i].bizCode), "jxbfd")
+          const start = $.allTask[i].completedTimes, end = $.allTask[i].targetTimes, bizCode = $.allTask[i]?.bizCode ?? "jxbfd"
           const taskinfo = $.allTask[i];
           console.log(`开始第${i + 1}个【📆日常任务】${taskinfo.taskName}\n`);
           for (let i = start; i < end; i++) {
