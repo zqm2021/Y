@@ -20,17 +20,7 @@ $.shareCodes = [];
 let cookiesArr = [], cookie = '', token = '';
 let UA, UAInfo = {};
 const randomCount = $.isNode() ? 20 : 3;
-$.appId = "92a36";
-function oc(fn, defaultVal) {//optioanl chaining
-  try {
-    return fn()
-  } catch (e) {
-    return undefined
-  }
-}
-function nc(val1, val2) {//nullish coalescing
-  return val1 != undefined ? val1 : val2
-}
+$.appId = 10032;
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -80,12 +70,7 @@ if ($.isNode()) {
     await $.wait(1000)
     res = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/cfd.json')
   }
-  let res2 = await getAuthorShareCode('https://raw.githubusercontent.com/zero205/updateTeam/main/shareCodes/cfd.json')
-  if (!res2) {
-    await $.wait(1000)
-    res2 = await getAuthorShareCode('https://raw.fastgit.org/zero205/updateTeam/main/shareCodes/cfd.json')
-  }
-  $.strMyShareIds = [...(res && res.shareId || []), ...(res2 || [])]
+  $.strMyShareIds = [...(res && res.shareId || [])]
   await shareCodesFormat()
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
@@ -1736,7 +1721,7 @@ async function requestAlgo() {
       'Accept-Language': 'zh-CN,zh;q=0.9,zh-TW;q=0.8,en;q=0.7'
     },
     'body': JSON.stringify({
-      "version": "3.0",
+      "version": "1.0",
       "fp": $.fingerprint,
       "appId": $.appId.toString(),
       "timestamp": Date.now(),
