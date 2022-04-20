@@ -55,7 +55,7 @@ jdPandaToken = $.isNode() ? (process.env.PandaToken ? process.env.PandaToken : `
     return;
   }
  // await requireConfig()
-  
+
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -222,7 +222,7 @@ function index() {
 async function appdoTask(type,taskInfo) {
   let functionId = 'cash_doTask'
   let body = {"type":type,"taskInfo":taskInfo}
-  let sign = await getSignfromPanda(functionId, body)  
+  let sign = await getSignfromPanda(functionId, body)
 
   return new Promise((resolve) => {
     $.post(apptaskUrl(functionId, sign), (err, resp, data) => {
@@ -275,7 +275,7 @@ function doTask(type,taskInfo) {
     })
   })
 }
-function getSignfromPanda(functionId, body) {	
+function getSignfromPanda(functionId, body) {
     var strsign = '';
 	let data = {
       "fn":functionId,
@@ -283,7 +283,7 @@ function getSignfromPanda(functionId, body) {
     }
     return new Promise((resolve) => {
         let url = {
-            url: "https://api.jds.codes/jd/sign",
+            url: "https://api.zhezhe.cf/jd/sign",
             body: JSON.stringify(data),
 		    followRedirect: false,
 		    headers: {
@@ -295,9 +295,9 @@ function getSignfromPanda(functionId, body) {
 		    timeout: 30000
         }
         $.post(url, async(err, resp, data) => {
-            try {				
-                data = JSON.parse(data);				
-				
+            try {
+                data = JSON.parse(data);
+
 				if (data && data.code == 200) {
                     lnrequesttimes = data.request_times;
                     console.log("连接Panda服务成功，当前Token使用次数为" + lnrequesttimes);
@@ -310,7 +310,7 @@ function getSignfromPanda(functionId, body) {
                 } else {
                     console.log("签名获取失败.");
                 }
-				
+
             }catch (e) {
                 $.logErr(e, resp);
             }finally {
