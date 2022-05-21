@@ -1,14 +1,5 @@
 /*
-京东手机狂欢城活动，每日可获得20+以上京豆（其中20京豆是往期奖励，需第一天参加活动后，第二天才能拿到）
-活动时间: 2021-10-23至2021-11-13
-活动入口：暂无 [活动地址](https://carnivalcity.m.jd.com/)
-
-往期奖励：
-a、第1名、第618名可获得实物手机一部
-b、 每日第2-10000名，可获得50个京豆
-c、 每日第10001-30000名可获得20个京豆
-d、 30000名之外，0京豆
-
+京东手机狂欢城
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ===================quantumultx================
 [task_local]
@@ -41,8 +32,8 @@ if ($.isNode()) {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 const JD_API_HOST = 'https://api.m.jd.com/api';
-const activeEndTime = '2021/11/14 00:00:00+08:00';//活动结束时间
-let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
+const activeEndTime = '2022/4/23 00:00:00+08:00';//活动结束时间
+let nowTime = new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000;
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
