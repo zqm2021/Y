@@ -1418,6 +1418,7 @@ function awardTask(taskType, taskinfo, bizCode = "jxbfd") {
               if(msg.indexOf('活动太火爆了') !== -1) {
                 console.log(`活动太火爆了`)
               } else {
+                console.log('-------------------\n', JSON.parse(prizeInfo).CardInfo.CardList)
                 console.log(`【领卡片奖励】${strTaskName} 获得 ${JSON.parse(prizeInfo).CardInfo.CardList[0].strCardName}\n${$.showLog ? data : ''}`);
               }
             }
