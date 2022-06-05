@@ -296,7 +296,7 @@ function getSignfromPanda(functionId, body) {
         'Accept': '*/*',
         "accept-encoding": "gzip, deflate, br",
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + jdPandaToken
+        // 'Authorization': 'Bearer ' + jdPandaToken
       },
       timeout: 30000
     }
@@ -305,7 +305,7 @@ function getSignfromPanda(functionId, body) {
         data = JSON.parse(data);
 
         if (data && data.code == 200) {
-          lnrequesttimes = data.request_times;
+          let lnrequesttimes = data.request_times;
           console.log("连接Panda服务成功，当前Token使用次数为" + lnrequesttimes);
           if (data.data.sign)
             strsign = data.data.sign || '';
